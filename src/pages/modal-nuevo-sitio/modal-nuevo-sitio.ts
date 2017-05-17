@@ -1,3 +1,4 @@
+import { Db } from './../../providers/db';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -19,7 +20,8 @@ export class ModalNuevoSitio {
     public navCtrl: NavController,
     public navParams: NavParams,
     private viewCtrl: ViewController,
-    private camera: Camera) { }
+    private camera: Camera,
+    private db: Db) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalNuevoSitioPage');
@@ -51,10 +53,6 @@ export class ModalNuevoSitio {
     });
   }
 
-  guardarSitio() {
-
-  }
-
   sacarFoto() {
     let cameraOptions: CameraOptions = {
       quality: 50,
@@ -82,4 +80,19 @@ export class ModalNuevoSitio {
     });
   }
 
+
+/**Guardar en la bbdd */
+  guardarSitio() {
+    let sitio = {
+      lat: this.coords.lat,
+      lng: this.coords.lng,
+      address: this.address,
+      description: this.description,
+      foto: this.foto
+    }
+    this.db.addSitio(sitio).then((res) => {
+      this.cerrarModal();
+      /*  alert('se ha introducido correctamente en la bd'); */
+    }, (err) => { /* alert('error al meter en la bd'+err) */ })
+  }
 }

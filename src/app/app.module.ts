@@ -13,6 +13,11 @@ import { Camera } from '@ionic-native/camera';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+//Proveedor de BBDD
+  import { Db } from './../providers/db';
+  import { SQLite } from '@ionic-native/sqlite';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -42,7 +47,9 @@ import { HomePage } from '../pages/home/home';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
     Geolocation,
-    Camera
+    Camera,
+    Db,
+    SQLite
   ]
 })
 export class AppModule {}
